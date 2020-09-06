@@ -41,33 +41,37 @@
   </footer>
   <script>
     const today = new Date()
-    const generated = today.getDate() - Math.floor(Math.random()*7);
+    const generated = today.getDate() - Math.floor(Math.random()*7)
     const locale = new Intl.DateTimeFormat('en-gb')
-    const codes = ['q-29-LN-6', 'm-70-Bk-0']
-    let burger = true
+    const codes = generateUniqueCodes(2)
 
-    setCode(codes[0]);
+    let burger = true
+    setCode(codes[0])
 
     document.getElementById('data_wydania').textContent = locale.format(today.setDate(generated))
 
     function setCode(code) {
-      // document.getElementById('unikalny_kod').textContent = String.fromCharCode(...code)
-      document.getElementById('unikalny_kod').textContent = code;
+      document.getElementById('unikalny_kod').textContent = code
     }
 
     document.getElementById('kupon').addEventListener('click', function change(e) {
-      burger =! burger;
+      burger =! burger
       e.target.src = burger ? 'burger.jpg' : 'lodzik.jpg'
       setCode(burger ? codes[0] : codes[1])
     })
 
-    // String.fromCharCode(65, 90, 97, 122, 48, 57)
-    function generateCode(len) {
-      let chars = []
-      for (var i = 0; i < len; i++) {
-        chars.push( 65 + Math.floor(Math.random() * 25) );
+    function generateUniqueCodes(quantity) {
+      let uniqueCodes = []
+      let charCodes = ''
+      for (let i = 0; i < quantity; i++) {
+        charCodes = [getRandomChar(97, 122), '45', getRandomChar(48, 57), getRandomChar(48, 57), 45, getRandomChar(65, 90), getRandomChar(65, 90), 45, getRandomChar(48, 57)]
+        uniqueCodes.push(String.fromCharCode(...charCodes))
       }
-      return chars;
+      return uniqueCodes
+    }
+
+    function getRandomChar(fromPoint, toPoint) {
+      return fromPoint + Math.floor(Math.random() * (toPoint - fromPoint))
     }
   </script>
   <link rel="preload" href="lodzik.jpg" as="image"/>
